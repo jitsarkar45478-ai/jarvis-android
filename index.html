@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
+<meta name="description" content="JARVIS Personal AI Assistant">
+<link rel="manifest" href="manifest.json">
+<title>JARVIS — Personal AI</title>
+<style>
+:root{color-scheme:dark;--bg:#06101d;--panel:#0b1b2c;--line:#173954;--cyan:#42d9ff;--muted:#8ba8bb}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% 5%,#12304b 0,#071321 48%,#040a12 100%);color:#e9f8ff;font-family:system-ui,-apple-system,Segoe UI,sans-serif;min-height:100vh}
+main{max-width:680px;margin:auto;padding:22px 16px 34px}.top{display:flex;justify-content:space-between;align-items:center}.brand{font-weight:800;letter-spacing:3px;font-size:20px}.status{font-size:12px;color:#8eeaff;border:1px solid #1b536b;border-radius:30px;padding:7px 11px}
+.hero{text-align:center;padding:34px 0 20px}.orb{width:190px;height:190px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#1c83a6 0,#0d3d5b 36%,#071b30 63%,#07111d 70%);box-shadow:0 0 28px #1abce755,inset 0 0 30px #48dfff55;border:1px solid #43d9ff88;animation:pulse 3s ease-in-out infinite}
+.orb:before,.orb:after{content:"";position:absolute;border:1px solid #43d9ff88;border-radius:50%;inset:-12px;animation:spin 12s linear infinite}.orb:after{inset:-23px;border-style:dashed;opacity:.55;animation-direction:reverse}.core{font-size:43px;font-weight:300;letter-spacing:3px;color:#c7f7ff;text-shadow:0 0 18px #3bdfff}
+@keyframes pulse{50%{box-shadow:0 0 55px #1abce788,inset 0 0 42px #48dfff77}}@keyframes spin{to{transform:rotate(360deg)}}
+h1{font-size:25px;margin:0 0 7px}.sub{color:var(--muted);font-size:13px}.panel{background:#0a1928cc;border:1px solid var(--line);border-radius:18px;padding:15px;margin-top:14px;box-shadow:0 12px 32px #0003}
+.row{display:flex;gap:9px;align-items:center}.row>*{min-width:0}.lang{flex:1;background:#0d263b;color:#dff8ff;border:1px solid #20506b;padding:11px;border-radius:11px;font-size:14px}
+.chat{height:230px;overflow:auto;display:flex;flex-direction:column;gap:10px}.msg{padding:11px 13px;border-radius:14px;max-width:88%;font-size:14px;line-height:1.5;white-space:pre-wrap}.bot{align-self:flex-start;background:#102b40;border:1px solid #1d536d}.user{align-self:flex-end;background:#0e536c;border:1px solid #2184a4}
+.inputrow{display:flex;gap:8px;margin-top:12px}.inputrow input{flex:1;min-width:0;background:#071421;border:1px solid #20506b;border-radius:12px;color:white;padding:13px;font-size:15px;outline:none}.btn{border:0;border-radius:12px;padding:12px 15px;background:linear-gradient(135deg,#1a9cc0,#17648f);color:white;font-weight:700;font-size:14px}.mic{width:66px;height:66px;border-radius:50%;font-size:25px;display:block;margin:16px auto 8px;box-shadow:0 0 24px #1ebce755}.mic.listening{background:linear-gradient(135deg,#e04d68,#9d244b);animation:pulse 1s infinite}.hint{text-align:center;color:var(--muted);font-size:12px}.small{font-size:12px;color:var(--muted);line-height:1.6}.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.tool{background:#0c2234;border:1px solid #1b435d;border-radius:12px;padding:12px 7px;text-align:center;font-size:12px;color:#bfeeff}.tool b{display:block;font-size:20px;margin-bottom:4px}
+@media(max-width:380px){.orb{width:160px;height:160px}.tools{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body><main>
+<header class="top"><div class="brand">J.A.R.V.I.S</div><div class="status" id="status">● SYSTEM READY</div></header>
+<section class="hero"><div class="orb"><div class="core">J</div></div><h1>আপনার Personal AI</h1><div class="sub">বাংলা · English · हिन्दी</div></section>
+<section class="panel">
+  <div class="row"><select class="lang" id="lang" aria-label="ভাষা"><option value="bn-BD">বাংলা</option><option value="en-US">English</option><option value="hi-IN">हिन्दी</option></select><button class="btn" id="speakToggle">🔊 Voice ON</button></div>
+  <div class="chat" id="chat" aria-live="polite"><div class="msg bot">নমস্কার! আমি JARVIS। আমার মাইক্রোফোন পরীক্ষা করতে নিচের বাটনে চাপ দিন। এখন এটি প্রাথমিক ডেমো; Advanced AI সংযোগ পরের ধাপে যোগ করব।</div></div>
+  <div class="inputrow"><input id="message" placeholder="এখানে লিখে কথা বলুন..." autocomplete="off"><button class="btn" id="send">Send</button></div>
+  <button class="btn mic" id="mic" aria-label="কথা বলুন">🎙️</button>
+  <div class="hint" id="hint">কথা বলতে মাইক্রোফোনে চাপ দিন</div>
+</section>
+<section class="panel"><b>JARVIS Modules</b><div class="tools"><div class="tool"><b>🎤</b>Voice Input</div><div class="tool"><b>🗣️</b>Voice Reply</div><div class="tool"><b>🧠</b>AI Brain<br><small>পরের ধাপে</small></div><div class="tool"><b>🌐</b>Internet<br><small>পরের ধাপে</small></div><div class="tool"><b>⏰</b>Reminder<br><small>পরের ধাপে</small></div><div class="tool"><b>📷</b>Vision<br><small>পরের ধাপে</small></div></div></section>
+<p class="small">নোট: ভয়েস ইনপুটের জন্য Chrome-এর microphone permission ও ইন্টারনেট লাগতে পারে। এই প্রথম সংস্করণে AI API যুক্ত নেই। নিরাপত্তার জন্য API key কখনো সরাসরি এই HTML ফাইলে রাখবেন না।</p>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const chat=$('chat'), lang=$('lang');let recognition=null,listening=false,voiceOn=true;
+function add(text,who){const d=document.createElement('div');d.className='msg '+who;d.textContent=text;chat.appendChild(d);chat.scrollTop=chat.scrollHeight}
+function say(text){if(!voiceOn||!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang=lang.value;u.rate=.96;speechSynthesis.speak(u)}
+function reply(text){let answer;
+const t=text.toLowerCase();
+if(/hello|hi|হ্যালো|হাই|नमस्ते|हेलो/.test(t)) answer=lang.value==='hi-IN'?'नमस्ते सर! मैं JARVIS हूँ।':lang.value==='en-US'?'Hello Sir! I am JARVIS.':'নমস্কার স্যার! আমি JARVIS।';
+else if(/তোমার নাম|your name|तुम्हारा नाम/.test(t)) answer=lang.value==='hi-IN'?'मेरा नाम JARVIS है।':lang.value==='en-US'?'My name is JARVIS.':'আমার নাম JARVIS।';
+else if(/সময়|time|समय/.test(t)) answer=(lang.value==='en-US'?'The time is ':lang.value==='hi-IN'?'अभी समय है ':'এখন সময় ')+new Date().toLocaleTimeString();
+else answer=lang.value==='hi-IN'?'मैंने आपकी बात सुनी। AI Brain जोड़ने के बाद मैं इसका जवाब दे पाऊँगा।':'আমি তোমার কথা শুনেছি। Advanced AI Brain যুক্ত হলে তোমার প্রশ্নের বুদ্ধিমান উত্তর দিতে পারব।';
+add(answer,'bot');say(answer)}
+function send(){const v=$('message').value.trim();if(!v)return;add(v,'user');$('message').value='';reply(v)}
+$('send').onclick=send;$('message').addEventListener('keydown',e=>{if(e.key==='Enter')send()});
+$('speakToggle').onclick=()=>{voiceOn=!voiceOn;$('speakToggle').textContent=voiceOn?'🔊 Voice ON':'🔇 Voice OFF';if(!voiceOn)speechSynthesis.cancel()};
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(SR){recognition=new SR();recognition.continuous=false;recognition.interimResults=false;recognition.onstart=()=>{listening=true;$('mic').classList.add('listening');$('status').textContent='● LISTENING';$('hint').textContent='শুনছি... কথা বলুন'};recognition.onend=()=>{listening=false;$('mic').classList.remove('listening');$('status').textContent='● SYSTEM READY';$('hint').textContent='কথা বলতে মাইক্রোফোনে চাপ দিন'};recognition.onerror=e=>{$('hint').textContent='মাইক্রোফোন সমস্যা: '+e.error};recognition.onresult=e=>{const v=e.results[0][0].transcript;$('message').value=v;send()};}
+$('mic').onclick=()=>{if(!recognition){$('hint').textContent='এই ব্রাউজারে Speech Recognition নেই। Android Chrome দিয়ে খুলুন।';return}if(listening)recognition.stop();else{recognition.lang=lang.value;try{recognition.start()}catch(e){$('hint').textContent='আবার চেষ্টা করুন'}}};
+if('serviceWorker'in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script></body></html>
